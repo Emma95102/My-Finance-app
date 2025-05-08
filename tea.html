@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>挑戰｜一週不喝手搖飲</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap">
+</head>
+<body>
+
+  <header>
+    <h1>🧋 一週不喝手搖飲挑戰</h1>
+    <p>挑戰 7 天不喝手搖飲，讓你省錢又更健康！</p>
+  </header>
+
+  <main>
+    <section class="form-section">
+      <ul>
+        <li>每天勾選是否成功戒掉手搖飲</li>
+        <li>完成 7 天即算挑戰成功</li>
+      </ul>
+
+      <form id="bubble-tea-form">
+        <div id="tea-checkboxes"></div>
+        <button type="submit" class="challenge-button">儲存挑戰進度</button>
+        <p id="tea-status-msg" style="margin-top: 10px;"></p>
+      </form>
+    </section>
+
+    <section class="challenge-link">
+      <button onclick="location.href='index.html'" class="challenge-button">回首頁</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 理財小幫手 Finance Helper</p>
+  </footer>
+
+  <script>
+    const teaContainer = document.getElementById('tea-checkboxes');
+    const teaStatus = document.getElementById('tea-status-msg');
+    const teaSaved = JSON.parse(localStorage.getItem('noBubbleTeaProgress') || '[]');
+
+    for (let i = 1; i <= 7; i++) {
+      const label = document.createElement('label');
+      label.style.display = 'block';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.value = i;
+      cb.checked = teaSaved.includes(i);
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(` 第 ${i} 天：沒喝手搖飲`));
+      teaContainer.appendChild(label);
+    }
+
+    document.getElementById('bubble-tea-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const checked = Array.from(teaContainer.querySelectorAll('input[type="checkbox"]'))
+        .filter(cb => cb.checked)
+        .map(cb => parseInt(cb.value));
+      localStorage.setItem('noBubbleTeaProgress', JSON.stringify(checked));
+      teaStatus.textContent =
+        checked.length === 7
+          ? '挑戰成功！你一週都沒喝手搖飲！'
+          : `目前已完成 ${checked.length}/7 天，加油！`;
+      teaStatus.style.color = checked.length === 7 ? '#d35400' : '#333';
+    });
+  </script>
+</body>
+</html>

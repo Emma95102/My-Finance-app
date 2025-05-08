@@ -1,15 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>replit</title>
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <meta charset="UTF-8">
+  <title>理財小幫手</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-  Hello world
+
+  <header>
+    <h1><i class="fas fa-piggy-bank"></i> 理財小幫手</h1>
+    <p>記帳好幫手，讓你的錢包不再空空！</p>
+  </header>
+
+  <main>
+    <!-- 記帳表單 -->
+    <section class="form-section">
+      <h2><i class="fas fa-pencil-alt"></i> 新增記帳</h2>
+      <form id="transaction-form">
+        <select id="type">
+          <option value="income">收入</option>
+          <option value="expense">支出</option>
+        </select>
+        <input type="number" id="amount" placeholder="金額" required>
+        <input type="text" id="category" placeholder="分類 (如: 餐飲)" required>
+        <button type="submit"><i class="fas fa-plus-circle"></i> 新增</button>
+      </form>
+    </section>
+
+    <!-- 收入支出報表 -->
+    <section class="form-section">
+      <h2><i class="fas fa-chart-line"></i> 收入支出表</h2>
+      <form id="income-form">
+        <table class="income-table">
+          <tr>
+            <th colspan="2">收入</th>
+            <th colspan="2">支出</th>
+          </tr>
+          <tr>
+            <th>分類</th>
+            <th>金額</th>
+            <th>分類</th>
+            <th>金額</th>
+          </tr>
+          <tr>
+            <td>薪資</td>
+            <td><input type="number" id="salary" placeholder="例如：30000" min="0" /></td>
+            <td>餐飲</td>
+            <td><input type="number" id="food" placeholder="例如：5000" min="0" /></td>
+          </tr>
+          <tr>
+            <td>兼職</td>
+            <td><input type="number" id="parttime" placeholder="例如：5000" min="0" /></td>
+            <td>交通</td>
+            <td><input type="number" id="transport" placeholder="例如：1500" min="0" /></td>
+          </tr>
+          <tr>
+            <td>投資收益</td>
+            <td><input type="number" id="investment" placeholder="例如：2000" min="0" /></td>
+            <td>娛樂</td>
+            <td><input type="number" id="entertainment" placeholder="例如：1000" min="0" /></td>
+          </tr>
+          <tr>
+            <td>其他</td>
+            <td><input type="number" id="other" placeholder="例如：1000" min="0" /></td>
+            <td>其他</td>
+            <td><input type="number" id="expense-other" placeholder="例如：2000" min="0" /></td>
+          </tr>
+
+          
+        </table>
+
+        <!-- 結餘區 -->
+        <div style="margin-top: 16px; font-weight: bold;">
+          收入總額：<span id="income-total">0</span> 元　
+          支出總額：<span id="expense-total">0</span> 元　
+          結餘：<span id="net-balance">0</span> 元
+        </div>
+
+        <button type="submit"><i class="fas fa-plus-circle"></i> 儲存資料</button>
+        <button type="button" id="reset-button" class="challenge-button" style="margin-left: 10px;">
+          清除資料</button>
+      </form>
+    </section>
+
+    <!-- 挑戰：一週不喝手搖飲 -->
+    <section class="challenge-link">
+      <h2>🧋 一週不喝手搖飲</h2>
+      <p>挑戰自己 7 天不喝手搖飲，讓你省錢又健康！</p>
+      <button onclick="location.href='tea.html#no-bubble-tea'" class="challenge-button">
+        接受挑戰！開始戒手搖！
+      </button>
+    </section>
+
+    <!-- 挑戰：十天不點外送 -->
+    <section class="challenge-link">
+      <h2>🍱 十天不點外送</h2>
+      <p>挑戰連續 10 天不使用外送服務，為健康與錢包加分！</p>
+      <button onclick="location.href='delivery.html#no-delivery'" class="challenge-button">
+        接受挑戰！開始外送節費！
+      </button>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2025 理財小幫手 Finance Helper</p>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 

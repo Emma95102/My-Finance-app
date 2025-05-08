@@ -1,0 +1,130 @@
+/* 字體與整體 */
+/* 字型與整體設定 */
+body {
+  font-family: 'ZCOOL KuaiLe', cursive, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff4e6; /* 淺橘背景 */
+  color: #5a2d0c; /* 深橘棕字體 */
+}
+
+header {
+  background-color: #ff8c42; /* 橘色標頭 */
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 5px solid #e66b00;
+}
+
+header h1 {
+  font-size: 2em;
+  margin: 0;
+}
+
+header p {
+  margin: 8px 0 0;
+  font-size: 1.2em;
+}
+
+main {
+  padding: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+h2 {
+  color: #d35400;
+  border-left: 6px solid #ffa94d;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+/* 表單區塊 */
+.form-section {
+  background-color: #fff0db;
+  border: 1px solid #ffc078;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+input,
+select,
+button {
+  font-family: inherit;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ffa94d;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #ff7800;
+  box-shadow: 0 0 5px #ffa94d;
+}
+
+button {
+  background-color: #ff922b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #fd7e14;
+}
+
+/* 挑戰區塊 */
+.challenge-link {
+  background-color: #fff3e0;
+  border: 2px solid #ffc078;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.challenge-button {
+  background-color: #ffa94d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1em;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.challenge-button:hover {
+  background-color: #ff922b;
+}
+
+/* 表格樣式 */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #ffe0b3;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #ffd8a8;
+}
+
+/* 頁尾 */
+footer {
+  background-color: #ff8c42;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: 40px;
+}

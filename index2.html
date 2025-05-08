@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>理財小幫手：理財挑戰</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'ZCOOL KuaiLe', cursive;
+      background: #fff5f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    header {
+      background-color: #ffe0e9;
+      padding: 2rem 1rem;
+      border-bottom: 4px solid #ffc2d1;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: #ff6f91;
+      margin: 0;
+    }
+
+    main {
+      padding: 2rem 1rem;
+    }
+
+    .challenge-card {
+      background: #fff0f5;
+      border-radius: 20px;
+      padding: 2rem 1rem;
+      margin: 2rem auto;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 4px 10px rgba(255, 168, 184, 0.2);
+      text-align: center;
+      color: #6a0572;
+    }
+
+    .challenge-card h2 {
+      color: #ff6f91;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .challenge-meta {
+      display: flex;
+      justify-content: space-around;
+      margin: 1rem 0;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    input#username {
+      padding: 0.6rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      width: 70%;
+    }
+
+    .join-btn {
+      background-color: #ffb6b9;
+      border: none;
+      color: white;
+      padding: 0.7rem 1.5rem;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+    }
+
+    .join-btn:hover {
+      background-color: #ff6f91;
+    }
+
+    .checkin-box {
+      margin: 1rem 0;
+    }
+
+    .checkin-btn {
+      background-color: #cdb4db;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .checkin-btn:hover {
+      background-color: #b185db;
+    }
+
+    .checkin-status {
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+
+    .leaderboard {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+      text-align: left;
+    }
+
+    .leaderboard li {
+      background: #ffe4ec;
+      margin: 0.3rem 0;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    footer {
+      background-color: #ffe0e9;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-piggy-bank"></i> 理財小幫手挑戰</h1>
+  </header>
+
+  <main>
+    <section class="challenge-card">
+      <h2>🔥 理財挑戰：一週不喝手搖飲！</h2>
+      <p>一起來培養自制力！每天打卡完成任務，看看誰能堅持到最後！</p>
+
+      <div class="challenge-meta">
+        <div>
+          <i class="fas fa-calendar-day"></i> 期間：5/7 ~ 5/13
+        </div>
+        <div>
+          <i class="fas fa-users"></i> 參與人數：<span id="participant-count">0</span> 人
+        </div>
+      </div>
+
+      <input type="text" id="username" placeholder="輸入暱稱參加挑戰" />
+      <button onclick="joinChallenge()" class="join-btn">✨ 加入挑戰</button>
+      
+
+      <div class="checkin-box">
+        <h3>✔️ 今日打卡</h3>
+        <button onclick="checkIn()" class="checkin-btn">點我打卡</button>
+        <p id="checkin-status" class="checkin-status"></p>
+      </div>
+
+      <h3>🏆 排行榜</h3>
+      <ul id="leaderboard" class="leaderboard"></ul>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 理財小幫手 Finance Helper
+  </footer>
+
+  <script>
+    // TODO: 換成實際後端的挑戰 ID
+    const CHALLENGE_ID = 'YOUR_CHALLENGE_ID_HERE';
+
+    async function joinChallenge() {
+      const username = document.getElementById('username').value.trim();
+      if (!username) return alert('請輸入暱稱');
+
+      await fetch(`http://localhost:5000/api/challenges/${CHALLENGE_ID}/join`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: username, username })
+      });
+
+      alert('已成功加入挑戰！');
+      renderLeaderboard();
+    }
+
+    async function checkIn() {
+      const username = document.getElementById('username').value.trim();
+      if (!username) return alert('請輸入暱稱');
+
+      const res = await fetch(`http://localhost:5000/api/challenges/${CHALLENGE_ID}/checkin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: username })
+      });
+
+      const result = await res.json();
+      document.getElementById('checkin-status').textContent =
+        `🎉 ${username} 今日已打卡！目前已累積 ${result.checkins.length} 天！`;
+
+      renderLeaderboard();
+    }
+
+    async function renderLeaderboard() {
+      const res = await fetch(`http://localhost:5000/api/challenges/${CHALLENGE_ID}`);
+      const data = await res.json();
+
+      const list = document.getElementById('leaderboard');
+      const count = document.getElementById('participant-count');
+      list.innerHTML = '';
+      count.textContent = data.participants.length;
+
+      data.participants.sort((a, b) => b.checkins.length - a.checkins.length);
+
+      data.participants.forEach((p, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span>🥇 ${p.username}</span><span>${p.checkins.length} 天</span>`;
+        list.appendChild(li);
+      });
+    }
+
+    renderLeaderboard();
+  </script>
+</body>
+</html>

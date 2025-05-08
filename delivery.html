@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>挑戰｜十天不點外送</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&display=swap">
+</head>
+<body>
+
+  <header>
+    <h1>🍱 十天不點外送挑戰</h1>
+    <p>挑戰 10 天不叫外送，為健康與錢包加分！</p>
+  </header>
+
+  <main>
+    <section class="form-section">
+      <ul>
+        <li>每天成功不叫外送，就勾選當天</li>
+        <li>完成 10 天可獲得自我掌聲！</li>
+      </ul>
+
+      <form id="no-delivery-form">
+        <div id="delivery-checkboxes"></div>
+        <button type="submit" class="challenge-button">儲存挑戰進度</button>
+        <p id="delivery-status-msg" style="margin-top: 10px;"></p>
+      </form>
+    </section>
+
+    <section class="challenge-link">
+      <button onclick="location.href='index.html'" class="challenge-button">回首頁</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 理財小幫手 Finance Helper</p>
+  </footer>
+
+  <script>
+    const deliveryContainer = document.getElementById('delivery-checkboxes');
+    const deliveryStatus = document.getElementById('delivery-status-msg');
+    const deliverySaved = JSON.parse(localStorage.getItem('noDeliveryProgress') || '[]');
+
+    for (let i = 1; i <= 10; i++) {
+      const label = document.createElement('label');
+      label.style.display = 'block';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.value = i;
+      cb.checked = deliverySaved.includes(i);
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(` 第 ${i} 天：沒點外送`));
+      deliveryContainer.appendChild(label);
+    }
+
+    document.getElementById('no-delivery-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const checked = Array.from(deliveryContainer.querySelectorAll('input[type="checkbox"]'))
+        .filter(cb => cb.checked)
+        .map(cb => parseInt(cb.value));
+      localStorage.setItem('noDeliveryProgress', JSON.stringify(checked));
+      deliveryStatus.textContent =
+        checked.length === 10
+          ? '挑戰完成！你成功連續 10 天沒點外送！'
+          : `目前已完成 ${checked.length}/10 天，繼續努力！`;
+      deliveryStatus.style.color = checked.length === 10 ? '#d35400' : '#333';
+    });
+  </script>
+</body>
+</html>
